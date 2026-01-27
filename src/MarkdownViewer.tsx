@@ -3,39 +3,76 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 
+// Build API URL based on the current host
+// This way it works when accessed from localhost, 127.0.0.1, IP address, or domain
+const getApiUrl = () => {
+  const protocol = window.location.protocol;
+  const hostname = window.location.hostname;
+  const port = 3000;
+  return `${protocol}//${hostname}:${port}/api/files`;
+};
+
 export default function MarkdownViewer({
-  url,
+  filePath,
   pollIntervalMs = 2000,
 }: {
-  url: string;
+  filePath: string;
   pollIntervalMs?: number;
 }) {
   const [content, setContent] = useState<string>("Loading...");
+  const [apiUrl] = useState(getApiUrl());
 
   useEffect(() => {
     let mounted = true;
-    const fetchOnce = async () => {
+
+    const fetchFile = async () => {
       try {
+        // Ensure path starts with /
+        const path = filePath.startsWith("/") ? filePath : `/${filePath}`;
+        const url = `${apiUrl}${path}`;
+
         const res = await fetch(url, { cache: "no-store" });
-        if (!res.ok) throw new Error(res.statusText);
+
+        if (!res.ok) {
+          const error = await res
+            .json()
+            .catch(() => ({ error: res.statusText }));
+          if (mounted) {
+            setContent(
+              `Error: ${error.error || error.message || "Failed to load file"}\n\nPath: ${path}`,
+            );
+          }
+          return;
+        }
+
         const text = await res.text();
-        if (mounted) setContent(text);
-      } catch (e) {
-        if (mounted) setContent(`Error: ${String(e)}`);
+        if (mounted) {
+          setContent(text);
+        }
+      } catch (err) {
+        if (mounted) {
+          setContent(
+            `Error: ${err instanceof Error ? err.message : String(err)}\n\nMake sure the markdown server is running on port 3000.`,
+          );
+        }
       }
     };
 
-    fetchOnce();
-    const id = setInterval(fetchOnce, pollIntervalMs);
+    fetchFile();
+    const id = setInterval(fetchFile, pollIntervalMs);
+
     return () => {
       mounted = false;
       clearInterval(id);
     };
-  }, [url, pollIntervalMs]);
+  }, [filePath, pollIntervalMs]);
 
   return (
     <div className="markdown-body">
-      <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeHighlight]}>
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeHighlight]}
+      >
         {content}
       </ReactMarkdown>
     </div>
