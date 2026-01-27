@@ -33,6 +33,9 @@ const mdFallbackPlugin: Plugin = {
 
 export default defineConfig({
   plugins: [react(), mdFallbackPlugin],
+  define: {
+    __MDPREVIEW_WIDTH__: JSON.stringify(process.env.MDPREVIEW_WIDTH || '900px'),
+  },
   server: {
     port: 5173,
   },

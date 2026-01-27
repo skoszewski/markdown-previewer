@@ -1,6 +1,10 @@
+:root {
+  --markdown-max-width: 900px;
+}
+
 .markdown-body {
   box-sizing: border-box;
-  max-width: 900px;
+  max-width: var(--markdown-max-width);
   margin: 24px auto;
   padding: 24px;
 }

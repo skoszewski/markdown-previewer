@@ -4,7 +4,7 @@
   "description": "A tool to preview README files in various formats.",
   "scripts": {
     "dev": "concurrently \"node src/server.js\" \"vite\"",
-    "dev:host": "concurrently \"node src/server.js\" \"vite --host\"",
+    "dev:host": "concurrently \"node src/server.js --host\" \"vite --host\"",
     "server": "node src/server.js",
     "client": "vite",
     "client:host": "vite --host"
@@ -12,6 +12,9 @@
   "author": "Slawomir Koszewski",
   "license": "MIT",
   "dependencies": {
+    "chokidar": "^5.0.0",
+    "concurrently": "^9.2.1",
+    "express": "^5.2.1",
     "highlight.js": "^11.11.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",

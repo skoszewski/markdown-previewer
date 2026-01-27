@@ -11,6 +11,9 @@ const markdownRoot = normalize(
   resolve(process.env.MARKDOWN_ROOT || process.cwd()),
 );
 
+// Parse --host command-line argument
+const HOST = process.argv.includes("--host") ? "0.0.0.0" : "localhost";
+
 console.log(`[markdown-server] Serving markdown files from: ${markdownRoot}`);
 
 // Middleware to parse JSON
@@ -131,10 +134,12 @@ function watchMarkdownFiles() {
 // Start watching
 watchMarkdownFiles();
 
-// Start server - listen on all interfaces so it's accessible from other devices
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`[markdown-server] Server running on http://0.0.0.0:${PORT}`);
+// Start server - respect --host flag
+const listenHost = process.argv.includes("--host") ? "0.0.0.0" : "localhost";
+  
+app.listen(PORT, listenHost, () => {
+  console.log(`[markdown-server] Server running on http://${listenHost}:${PORT}`);
   console.log(
-    `[markdown-server] API endpoint: http://0.0.0.0:${PORT}/api/files/*`,
+    `[markdown-server] API endpoint: http://${listenHost}:${PORT}/api/file`,
   );
 });
