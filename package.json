@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "A tool to preview README files in various formats.",
   "scripts": {
-    "dev": "concurrently \"tsx watch src/server.ts\" \"vite\"",
-    "dev:host": "concurrently \"tsx watch src/server.ts\" \"vite --host\"",
-    "server": "tsx watch src/server.ts",
+    "dev": "concurrently \"node src/server.js\" \"vite\"",
+    "dev:host": "concurrently \"node src/server.js\" \"vite --host\"",
+    "server": "node src/server.js",
     "client": "vite",
     "client:host": "vite --host"
   },
@@ -24,18 +24,10 @@
   },
   "type": "module",
   "devDependencies": {
-    "@types/express": "^5.0.6",
-    "@types/node": "^25.0.10",
     "@types/react": "^19.2.9",
     "@types/react-dom": "^19.2.3",
-    "@types/serve-static": "^2.2.0",
     "@vitejs/plugin-react": "^5.1.2",
-    "chokidar": "^5.0.0",
     "concurrently": "^9.2.1",
-    "express": "^5.2.1",
-    "serve-static": "^2.2.1",
-    "tsx": "^4.21.0",
-    "typescript": "^5.9.3",
     "vite": "^7.3.1"
   }
 }

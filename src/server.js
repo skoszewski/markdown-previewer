@@ -33,7 +33,7 @@ app.get("/health", (req, res) => {
 app.get(/^\/api\/files\/(.*)$/, async (req, res) => {
   try {
     // Extract the path from the captured group
-    let filePath = (req as any).params[0];
+    let filePath = req.params[0];
 
     // Handle root path case - empty string means root directory
     if (!filePath) {
@@ -88,9 +88,6 @@ app.get(/^\/api\/files\/(.*)$/, async (req, res) => {
     });
   }
 });
-
-// Watch for file changes and notify clients
-const watchers = new Map<string, boolean>();
 
 function watchMarkdownFiles() {
   const watcher = chokidar.watch(markdownRoot, {
