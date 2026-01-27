@@ -2,23 +2,33 @@
 
 A tool to preview README files in Markdown.
 
-## Usage
+## Run locally
 
 Install Node.js 24 or higher. Then run:
 
 ```bash
 npm install
+```
+
+To start the App run:
+
+```bash
 npm run dev
 ```
 
-or run:
+or run and expose on all network interfaces:
 
 ```bash
-npm run install
 npm run dev:host
 ```
 
-to expose the previewer on all network interfaces.
+You can specify the documents root directory by setting the `MARKDOWN_ROOT` environment variable. By default, it uses the current working directory. You can also set the maximum width of the markdown content by setting the `MDPREVIEW_WIDTH` environment variable (default is `900px`).
+
+Example:
+
+```bash
+MARKDOWN_ROOT=/path/to/markdown/files MDPREVIEW_WIDTH=1200px npm run dev
+```
 
 ## Docker
 
@@ -39,3 +49,5 @@ If you are using `container` use the following command:
 ```bash
 container run --rm --name mdpreview -p 3000:3000 -p 5173:5173 --mount type=bind,source=$(pwd),target=/docs readme-previewer
 ```
+
+You can add the `-e MDPREVIEW_WIDTH=1200px` option to set the maximum width of the markdown content. The MARKDOWN_ROOT is set to `/docs` inside the container, and should not be changed, unless you mount the files to a different location than `/docs`.
