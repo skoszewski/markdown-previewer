@@ -41,22 +41,40 @@ MDPREVIEW_ROOT=/path/to/markdown/files MDPREVIEW_WIDTH=1200px npm run dev
 
 ## Docker
 
-Build the Docker image:
+Build the container image:
 
 ```bash
-docker build -t readme-previewer .
+docker build -t $DOCKER_REPO_NAME/markdown-previewer .
+```
+
+or pull the image from Docker Hub:
+
+```bash
+docker pull $DOCKER_REPO_NAME/markdown-previewer
 ```
 
 Run the Docker container:
 
 ```bash
-docker run --rm --name mdpreview -p 3000:3000 -p 5173:5173 -v $(pwd):/docs readme-previewer
+docker run --rm --name mdpreview -p 3000:3000 -p 5173:5173 -v $(pwd):/docs $DOCKER_REPO_NAME/markdown-previewer
 ```
 
-If you are using `container` use the following command:
+## Apple Container
+
+If you are using Apple Silicon Mac, I encourage you to use the `container` from the [@apple/container](https://github.com/apple/container) project.
+
+Build the container image:
 
 ```bash
-container run --rm --name mdpreview -p 3000:3000 -p 5173:5173 --mount type=bind,source=$(pwd),target=/docs readme-previewer
+container builder stop
+container builder start --cpus 8 --memory 6G
+container build -t $DOCKER_REPO_NAME/markdown-previewer .
+```
+
+> :information_source: **Important:** You may need to stop and start the container builder to allocate more resources (CPU and memory) for building the image. Remember to use units like `G` for gigabytes when specifying memory, otherwise it will be interpreted literally as bytes. I recommend at least `--memory 4G` for building this image. Using too little memory may lead to hangs during the build process.
+
+```bash
+container run --rm --name mdpreview -p 3000:3000 -p 5173:5173 --mount type=bind,source=$(pwd),target=/docs $DOCKER_REPO_NAME/markdown-previewer
 ```
 
 You can add the `-e MDPREVIEW_WIDTH=1200px` option to set the maximum width of the markdown content. The MDPREVIEW_ROOT is set to `/docs` inside the container, and should not be changed, unless you mount the files to a different location than `/docs`.

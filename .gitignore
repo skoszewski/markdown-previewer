@@ -9,3 +9,6 @@ build/
 
 # Configuration
 config.json
+
+# Exclude current TODO file
+TODO.md
