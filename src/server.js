@@ -136,7 +136,7 @@ watchMarkdownFiles();
 
 // Start server - respect --host flag
 const listenHost = process.argv.includes("--host") ? "0.0.0.0" : "localhost";
-  
+
 app.listen(PORT, listenHost, () => {
   console.log(`[markdown-server] Server running on http://${listenHost}:${PORT}`);
   console.log(
