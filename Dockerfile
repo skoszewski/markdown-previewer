@@ -16,7 +16,7 @@ COPY src/ ./src/
 COPY README.md /docs/
 
 # Set environment variables
-ENV MARKDOWN_ROOT=/docs
+ENV MDPREVIEW_ROOT=/docs
 
 # Expose both ports
 EXPOSE 5173 3000

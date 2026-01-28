@@ -8,7 +8,7 @@ const PORT = 3000;
 
 // Get markdown root from environment or use current directory
 const markdownRoot = normalize(
-  resolve(process.env.MARKDOWN_ROOT || process.cwd()),
+  resolve(process.env.MDPREVIEW_ROOT || process.cwd()),
 );
 
 // Parse --host command-line argument

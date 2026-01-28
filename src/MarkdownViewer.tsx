@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
+import remarkEmoji from "remark-emoji";
 
 // Build API URL based on the current host
 // This way it works when accessed from localhost, 127.0.0.1, IP address, or domain
@@ -70,7 +71,7 @@ export default function MarkdownViewer({
   return (
     <div className="markdown-body">
       <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
+        remarkPlugins={[remarkGfm, remarkEmoji]}
         rehypePlugins={[rehypeHighlight]}
       >
         {content}
