@@ -1,6 +1,6 @@
 # Markdown Previewer :mag:
 
-A tool to preview README.md and other files in Markdown. It is designed to run locally natively or as a Docker container.
+A tool to preview README.md and other files in Markdown. It is designed to run locally, either natively or as a Docker container.
 
 It uses `remark-gfm` to support GitHub Flavored Markdown, `remark-emoji` to support emojis, and `rehype-highlight` for syntax highlighting of code blocks. Some features may not work in other Markdown viewers.
 
@@ -19,7 +19,7 @@ npm install
 
 > **Note:** You can add a major version number as an argument to `install-node.sh` to install a specific Node.js version (e.g., `scripts/install-node.sh 25`).
 
-To start the App run:
+To start the app, run:
 
 ```bash
 npm run dev
@@ -61,7 +61,7 @@ docker run --rm --name mdpreview -p 3000:3000 -p 5173:5173 -v $(pwd):/docs $DOCK
 
 ## Apple Container
 
-If you are using Apple Silicon Mac, I encourage you to use the `container` from the [@apple/container](https://github.com/apple/container) project.
+If you are using an Apple Silicon Mac, I encourage you to use the `container` from the [@apple/container](https://github.com/apple/container) project.
 
 Build the container image:
 
@@ -77,4 +77,4 @@ container build -t $DOCKER_REPO_NAME/markdown-previewer .
 container run --rm --name mdpreview -p 3000:3000 -p 5173:5173 --mount type=bind,source=$(pwd),target=/docs $DOCKER_REPO_NAME/markdown-previewer
 ```
 
-You can add the `-e MDPREVIEW_WIDTH=1200px` option to set the maximum width of the markdown content. The MDPREVIEW_ROOT is set to `/docs` inside the container, and should not be changed, unless you mount the files to a different location than `/docs`.
+You can add the `-e MDPREVIEW_WIDTH=1200px` option to set the maximum width of the markdown content. The MDPREVIEW_ROOT is set to `/docs` inside the container, and should not be changed unless you mount the files to a different location than `/docs`.
